@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class GameViewController: UIViewController {
     // variables
     var isXTurn = true
     var gameOver = false
@@ -16,6 +16,10 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var displayWinnerLabel: UILabel!
     @IBOutlet weak var playerWinnerLabel: UILabel!
+    @IBOutlet weak var drawLabel: UILabel!
+    
+    @IBOutlet weak var currentPlayerLabel: UILabel!
+    
     
     // game grid buttons
     @IBOutlet weak var button0: UIButton!
@@ -53,6 +57,11 @@ class ViewController: UIViewController {
         // hide winner labels
         displayWinnerLabel.isHidden = true
         playerWinnerLabel.isHidden = true
+        
+        // hide draw label
+        drawLabel.isHidden = true
+        
+        updateCurrentPlayer()
     }
     
     
@@ -64,6 +73,14 @@ class ViewController: UIViewController {
             playerWinnerLabel.isHidden = false
         } else {
             print("error")
+        }
+    }
+    
+    func updateCurrentPlayer() {
+        if (isXTurn) {
+            currentPlayerLabel.text = "X"
+        } else {
+            currentPlayerLabel.text = "O"
         }
     }
     
@@ -88,6 +105,7 @@ class ViewController: UIViewController {
             
             // next turn
             isXTurn = !isXTurn
+            updateCurrentPlayer()
         }
     }
     @IBAction func click1(_ sender: Any) {
@@ -109,6 +127,7 @@ class ViewController: UIViewController {
             
             // next turn
             isXTurn = !isXTurn
+            updateCurrentPlayer()
         }
     }
     @IBAction func click2(_ sender: Any) {
@@ -130,6 +149,7 @@ class ViewController: UIViewController {
             
             // next turn
             isXTurn = !isXTurn
+            updateCurrentPlayer()
         }
     }
     
@@ -152,6 +172,7 @@ class ViewController: UIViewController {
             
             // next turn
             isXTurn = !isXTurn
+            updateCurrentPlayer()
         }
     }
     @IBAction func click4(_ sender: Any) {
@@ -173,6 +194,7 @@ class ViewController: UIViewController {
             
             // next turn
             isXTurn = !isXTurn
+            updateCurrentPlayer()
         }
     }
     @IBAction func click5(_ sender: Any) {
@@ -194,6 +216,7 @@ class ViewController: UIViewController {
             
             // next turn
             isXTurn = !isXTurn
+            updateCurrentPlayer()
         }
     }
     
@@ -216,6 +239,7 @@ class ViewController: UIViewController {
             
             // next turn
             isXTurn = !isXTurn
+            updateCurrentPlayer()
         }
     }
     @IBAction func click7(_ sender: Any) {
@@ -237,6 +261,7 @@ class ViewController: UIViewController {
             
             // next turn
             isXTurn = !isXTurn
+            updateCurrentPlayer()
         }
     }
     @IBAction func click8(_ sender: Any) {
@@ -258,6 +283,7 @@ class ViewController: UIViewController {
             
             // next turn
             isXTurn = !isXTurn
+            updateCurrentPlayer()
         }
     }
     
@@ -298,9 +324,28 @@ class ViewController: UIViewController {
         }
         else if (isSame(str1: button2.currentTitle ?? "", str2: button4.currentTitle ?? "", str3: button6.currentTitle ?? "")) {
             return true
+        } else if (isDraw()) {
+            showDraw()
+            
+            return false
         } else {
             return false
         }
+    }
+    
+    func isDraw() -> Bool {
+        for val in isGridTaken {
+            if (val == false) {
+                return false
+            }
+        }
+        
+        return true
+    }
+    
+    func showDraw() {
+        drawLabel.isHidden = false
+        gameOver = true
     }
     
     
